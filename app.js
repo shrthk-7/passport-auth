@@ -33,9 +33,13 @@ app.use(
 );
 
 app.get("/", (req, res, next) => {
-  console.log(req.session);
-
-  res.send(`<h1>Hello World</h1>`);
+  if (req.session.viewCount) {
+    req.session.viewCount++;
+    res.send(`<h1>This is your ${req.session.viewCount}th visit!</h1>`);
+  } else {
+    req.session.viewCount = 1;
+    res.send(`<h1>This is your first visit!</h1>`);
+  }
 });
 
 app.listen(3000, () => {
