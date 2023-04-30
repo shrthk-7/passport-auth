@@ -1,22 +1,9 @@
+require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const store = require("./database");
 
 const app = express();
-
-const mongoURI = "mongodb://127.0.0.1:27017/passport-auth";
-
-const clientPromise = mongoose
-  .connect(mongoURI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then((res) => res.connection.getClient());
-
-const store = MongoStore.create({
-  clientPromise: clientPromise,
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
