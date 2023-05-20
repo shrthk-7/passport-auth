@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const MongoStore = require("connect-mongo");
+const mongoose    = require("mongoose");
+const MongoStore  = require("connect-mongo");
 
 const clientPromise = mongoose
   .connect(process.env.MONGODB_URI, {

@@ -1,5 +1,5 @@
-const Models = require("./models");
-const Utils = require("./utils");
+const Models  = require("./models");
+const Utils   = require("./utils");
 
 exports.register = async (req, res, next) => {
   const { username, password } = req.body;

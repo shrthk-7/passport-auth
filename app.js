@@ -1,9 +1,9 @@
 require("dotenv").config();
-const express = require("express");
-const session = require("express-session");
-const passport = require("passport");
+const express   = require("express");
+const session   = require("express-session");
+const passport  = require("passport");
+const store     = require("./database");
 
-const store = require("./database");
 const app = express();
 
 // ----------- Express -------------
