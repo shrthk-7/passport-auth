@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 // ----------- Express Session -----
 app.use(
   session({
-    secret: "super-secret-key",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
     store: store,
@@ -28,6 +28,7 @@ require("./passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
+// ----------- Router --------------
 const router = require("./router");
 app.use(router);
 

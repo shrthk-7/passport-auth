@@ -6,9 +6,11 @@ const router = express.Router();
 
 router.get("/", Controller.homePage);
 router.get("/login", Controller.sendLoginForm);
+router.get("/logout", Controller.logout);
 router.get("/register", Controller.sendRegisterForm);
 router.get("/login-success", Controller.loginSuccess);
 router.get("/login-fail", Controller.loginFailure);
+router.get("/protected-route", Controller.protectedRoute);
 
 router.post(
   "/login",

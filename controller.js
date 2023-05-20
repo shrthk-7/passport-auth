@@ -42,9 +42,13 @@ exports.sendRegisterForm = async (req, res, next) => {
 
 exports.homePage = async (req, res, next) => {
   req.session.visits = req.session.visits ? req.session.visits + 1 : 1;
-  return res.send(
-    `<h1>You have visited this page: ${req.session.visits} times</h1>`
-  );
+  return res.send(`
+    <h1>You have visited this page: ${req.session.visits} times</h1>
+    <a href="/login">Login</a>
+    <a href="/logout">Logout</a>
+    <a href="/register">Register</a>
+    <a href="/protected-route">Protected Route</a>
+    `);
 };
 
 exports.loginSuccess = async (req, res, next) => {
@@ -53,4 +57,21 @@ exports.loginSuccess = async (req, res, next) => {
 
 exports.loginFailure = async (req, res, next) => {
   res.send(`<h1>Failed Login</h1>`);
+};
+
+exports.protectedRoute = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.send(`<h1>You are welcome here :)</h1>`);
+  }
+  return res.send(`<h1>Begone you fool</h1>`);
+};
+
+exports.logout = async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+      return res.redirect("/");
+    }
+    res.redirect("/protected-route");
+  });
 };
