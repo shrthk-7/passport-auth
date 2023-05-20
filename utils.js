@@ -1,11 +1,23 @@
 const crypto = require("crypto");
 
+const iterations = 1000;
+const keyLength = 64;
+
 const validatePassword = (password, hash, salt) => {
-  return true;
+  const generatedHash = crypto
+    .pbkdf2Sync(password, salt, iterations, keyLength, "sha512")
+    .toString("hex");
+
+  return generatedHash === hash;
 };
 
 const generatePassword = (password) => {
-  return "password";
+  const salt = crypto.randomBytes(32).toString("hex");
+  const hash = crypto
+    .pbkdf2Sync(password, salt, iterations, keyLength, "sha512")
+    .toString("hex");
+
+  return { salt, hash };
 };
 
 module.exports = { validatePassword, generatePassword };

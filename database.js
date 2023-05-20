@@ -15,6 +15,7 @@ const clientPromise = mongoose
     process.exit(500);
   });
 
-module.exports = MongoStore.create({
-  clientPromise: clientPromise,
+const store = MongoStore.create({
+  clientPromise,
 });
+module.exports = store;

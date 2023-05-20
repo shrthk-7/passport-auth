@@ -1,13 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
-const store = require("./database");
-const Controllers = require("./controller");
+const passport = require("passport");
 
+const store = require("./database");
 const app = express();
 
+// ----------- Express -------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ----------- Express Session -----
 app.use(
   session({
     secret: "super-secret-key",
@@ -20,12 +23,13 @@ app.use(
   })
 );
 
-app.get("/", (req, res, next) => {
-  req.session.visits = req.session.visits ? req.session.visits + 1 : 1;
-  res.send(`<h1>You have visited this page: ${req.session.visits} times</h1>`);
-});
+// ----------- Passport ------------
+require("./passport");
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.post("/", Controllers.User.createUser);
+const router = require("./router");
+app.use(router);
 
 app.listen(3000, () => {
   console.log("Listenening on localhost:3000");
