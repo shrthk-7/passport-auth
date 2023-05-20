@@ -1,4 +1,6 @@
 const Controller = require("./controller");
+const Middleware = require("./middleware");
+
 const express = require("express");
 const passport = require("passport");
 
@@ -6,11 +8,20 @@ const router = express.Router();
 
 router.get("/", Controller.homePage);
 router.get("/login", Controller.sendLoginForm);
-router.get("/logout", Controller.logout);
 router.get("/register", Controller.sendRegisterForm);
-router.get("/login-success", Controller.loginSuccess);
 router.get("/login-fail", Controller.loginFailure);
-router.get("/protected-route", Controller.protectedRoute);
+
+router.get("/logout", Middleware.Auth.verifyAuth, Controller.logout);
+router.get(
+  "/login-success",
+  Middleware.Auth.verifyAuth,
+  Controller.loginSuccess
+);
+router.get(
+  "/protected-route",
+  Middleware.Auth.verifyAuth,
+  Controller.protectedRoute
+);
 
 router.post(
   "/login",
